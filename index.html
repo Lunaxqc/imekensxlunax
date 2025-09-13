@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acablade's Handbook</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: #f8f9fa;
+            border-right: 1px solid #e9ecef;
+            padding: 2rem 0;
+            overflow-y: auto;
+        }
+
+        .sidebar h1 {
+            padding: 0 2rem 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2563eb;
+            border-bottom: 1px solid #e9ecef;
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-section {
+            padding: 0 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .nav-section h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 0.5rem 0;
+            color: #374151;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: #2563eb;
+        }
+
+        .nav-link.active {
+            color: #2563eb;
+            font-weight: 500;
+        }
+
+        .content {
+            flex: 1;
+            padding: 3rem 4rem;
+            max-width: 800px;
+            overflow-y: auto;
+        }
+
+        .content h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #111827;
+        }
+
+        .content h2 {
+            font-size: 1.875rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: #111827;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            color: #374151;
+        }
+
+        .content p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: #4b5563;
+        }
+
+        .content ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .content li {
+            margin-bottom: 0.5rem;
+            color: #4b5563;
+        }
+
+        .content code {
+            background: #f3f4f6;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.875rem;
+            color: #e11d48;
+        }
+
+        .content pre {
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .content pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        .search-box {
+            padding: 0 2rem 1.5rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            font-size: 1.1rem;
+            color: #6b7280;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .content {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1>Acablade's Handbook</h1>
+            
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Ara...">
+            </div>
+
+            <div class="nav-section">
+                <h3>Ana Sayfa</h3>
+                <a class="nav-link active" onclick="loadPage('home')">Introduction</a>
+            </div>
+
+            <div class="nav-section">
+                <h3>SIFIRDAN CLİENT</h3>
+                <a class="nav-link" onclick="loadPage('ozel-client')">Giriş</a>
+                <a class="nav-link" onclick="loadPage('item-ekleme')">Item Ekleme</a>
+                <a class="nav-link" onclick="loadPage('item-ekleme')">Payload Sistemi</a>
+            </div>
+
+
+        </nav>
+
+        <main class="content" id="content">
+            <div class="loading">İçerik yükleniyor...</div>
+        </main>
+    </div>
+
+    <script>
+        const pages = {
+            'home': {
+                title: 'Introduction',
+                content: `
+                    <h1>Pleasant ve Mekens'in Handbook'una Hoş Geldiniz</h1>
+                `
+            },
+            'ozel-client': {
+                title: 'Özel Client',
+                content: `
+                    <h1>Özel Client Kurulumu ve Kullanımı</h1>
+                    
+                    <h2>Kurulum</h2>
+                    <p>Özel client'ı kurmak için aşağıdaki adımları takip edin:</p>
+                    
+                    <ol>
+                        <li>Client dosyasını indirin</li>
+                        <li>Gerekli bağımlılıkları yükleyin</li>
+                        <li>Konfigürasyon dosyasını düzenleyin</li>
+                        <li>Client'ı başlatın</li>
+                    </ol>
+                    
+                    <h2>Konfigürasyon</h2>
+                    <p>Client konfigürasyonu için <code>config.json</code> dosyasını düzenlemeniz gerekir:</p>
+                    
+                    <pre><code>{
+  "server": "localhost:8080",
+  "api_key": "your_api_key_here",
+  "timeout": 5000,
+  "debug": false
+}</code></pre>
+                    
+                    <h2>Kullanım</h2>
+                    <p>Client başlatıldıktan sonra aşağıdaki komutları kullanabilirsiniz:</p>
+                    
+                    <ul>
+                        <li><code>/connect</code> - Sunucuya bağlan</li>
+                        <li><code>/status</code> - Bağlantı durumunu kontrol et</li>
+                        <li><code>/help</code> - Yardım menüsü</li>
+                    </ul>
+                `
+            },
+            'item-ekleme': {
+                title: 'Item Ekleme',
+                content: `
+                    <h1>Item Ekleme Sistemi</h1>
+                    
+                    <p>Sisteme yeni itemlar eklemek için çeşitli yöntemler bulunmaktadır.</p>
+                    
+                    <h2>Manuel Item Ekleme</h2>
+                    <p>Admin paneli üzerinden manuel olarak item ekleyebilirsiniz:</p>
+                    
+                    <ol>
+                        <li>Admin panel'e giriş yapın</li>
+                        <li>"Items" sekmesine gidin</li>
+                        <li>"Yeni Item Ekle" butonuna tıklayın</li>
+                        <li>Gerekli bilgileri doldurun</li>
+                        <li>"Kaydet" butonuna tıklayın</li>
+                    </ol>
+                    
+                    <h2>Toplu Item Ekleme</h2>
+                    <p>CSV dosyası kullanarak toplu item ekleyebilirsiniz.</p>
+                    
+                    <h3>CSV Formatı</h3>
+                    <pre><code>name,description,category,price
+Item 1,Açıklama 1,Kategori A,100
+Item 2,Açıklama 2,Kategori B,200</code></pre>
+                    
+                    <h2>API ile Item Ekleme</h2>
+                    <p>REST API kullanarak programatik olarak item ekleyebilirsiniz:</p>
+                    
+                    <pre><code>POST /api/items
+Content-Type: application/json
+
+{
+  "name": "Yeni Item",
+  "description": "Item açıklaması",
+  "category": "Kategori",
+  "price": 150
+}</code></pre>
+                `
+            },
+            'ayarlar': {
+                title: 'Sistem Ayarları',
+                content: `
+                    <h1>Sistem Ayarları</h1>
+                    
+                    <p>Sistem ayarlarını düzenlemek için admin panelindeki "Ayarlar" bölümünü kullanabilirsiniz.</p>
+                    
+                    <h2>Genel Ayarlar</h2>
+                    <ul>
+                        <li><strong>Site Adı:</strong> Web sitesinin başlığı</li>
+                        <li><strong>Site Açıklaması:</strong> Meta açıklama</li>
+                        <li><strong>Dil:</strong> Sistem dili seçimi</li>
+                        <li><strong>Zaman Dilimi:</strong> Varsayılan zaman dilimi</li>
+                    </ul>
+                    
+                    <h2>Güvenlik Ayarları</h2>
+                    <ul>
+                        <li><strong>Şifre Politikası:</strong> Minimum şifre gereksinimleri</li>
+                        <li><strong>Oturum Süresi:</strong> Kullanıcı oturumu timeout süresi</li>
+                        <li><strong>IP Kısıtlamaları:</strong> Erişim IP filtreleri</li>
+                        <li><strong>2FA:</strong> İki faktörlü doğrulama ayarları</li>
+                    </ul>
+                    
+                    <h2>API Ayarları</h2>
+                    <ul>
+                        <li><strong>API Anahtarları:</strong> API erişim anahtarları yönetimi</li>
+                        <li><strong>Rate Limiting:</strong> API istek sınırlamaları</li>
+                        <li><strong>Webhook URL'leri:</strong> Otomatik bildirim adresleri</li>
+                    </ul>
+                `
+            },
+            'rehber': {
+                title: 'Kullanım Rehberi',
+                content: `
+                    <h1>Kullanım Rehberi</h1>
+                    
+                    <p>Bu rehber sistemi etkin bir şekilde kullanmanız için hazırlanmıştır.</p>
+                    
+                    <h2>İlk Adımlar</h2>
+                    <ol>
+                        <li>Sisteme giriş yapın</li>
+                        <li>Profil bilgilerinizi tamamlayın</li>
+                        <li>Gerekli izinleri alın</li>
+                        <li>Dashboard'a göz atın</li>
+                    </ol>
+                    
+                    <h2>Ana Özellikler</h2>
+                    
+                    <h3>Dashboard</h3>
+                    <p>Ana kontrol paneli üzerinden tüm sistem özelliklerine erişebilirsiniz.</p>
+                    
+                    <h3>Item Yönetimi</h3>
+                    <p>Item ekleme, düzenleme, silme ve listeleme işlemlerini gerçekleştirebilirsiniz.</p>
+                    
+                    <h3>Kullanıcı Yönetimi</h3>
+                    <p>Yeni kullanıcı ekleme, rol atama ve izin yönetimi yapabilirsiniz.</p>
+                    
+                    <h3>Raporlama</h3>
+                    <p>Sistem kullanımı ve performans raporlarına erişebilirsiniz.</p>
+                    
+                    <h2>İpuçları</h2>
+                    <ul>
+                        <li>Klavye kısayollarını öğrenin</li>
+                        <li>Filtreleme özelliklerini kullanın</li>
+                        <li>Düzenli yedekleme yapın</li>
+                        <li>Güncellemeleri takip edin</li>
+                    </ul>
+                `
+            },
+            'api': {
+                title: 'API Kullanımı',
+                content: `
+                    <h1>API Kullanımı</h1>
+                    
+                    <p>Acablade sistemi RESTful API sunmaktadır. Bu API ile tüm sistem özelliklerine programatik erişim sağlayabilirsiniz.</p>
+                    
+                    <h2>Kimlik Doğrulama</h2>
+                    <p>API'ye erişim için API anahtarı gereklidir:</p>
+                    
+                    <pre><code>curl -H "Authorization: Bearer YOUR_API_KEY" \\
+     -H "Content-Type: application/json" \\
+     https://api.acablade.com/v1/items</code></pre>
+                    
+                    <h2>Temel Endpoints</h2>
+                    
+                    <h3>Items</h3>
+                    <ul>
+                        <li><code>GET /api/v1/items</code> - Tüm itemları listele</li>
+                        <li><code>GET /api/v1/items/{id}</code> - Belirli bir item'ı getir</li>
+                        <li><code>POST /api/v1/items</code> - Yeni item oluştur</li>
+                        <li><code>PUT /api/v1/items/{id}</code> - Item'ı güncelle</li>
+                        <li><code>DELETE /api/v1/items/{id}</code> - Item'ı sil</li>
+                    </ul>
+                    
+                    <h3>Users</h3>
+                    <ul>
+                        <li><code>GET /api/v1/users</code> - Kullanıcıları listele</li>
+                        <li><code>POST /api/v1/users</code> - Yeni kullanıcı oluştur</li>
+                        <li><code>PUT /api/v1/users/{id}</code> - Kullanıcıyı güncelle</li>
+                    </ul>
+                    
+                    <h2>Örnek Kullanım</h2>
+                    <pre><code># Yeni item oluşturma
+curl -X POST https://api.acablade.com/v1/items \\
+     -H "Authorization: Bearer YOUR_API_KEY" \\
+     -H "Content-Type: application/json" \\
+     -d '{
+       "name": "Test Item",
+       "description": "Test açıklaması",
+       "category": "Test Kategori"
+     }'</code></pre>
+                `
+            },
+            'plugins': {
+                title: 'Plugin Sistemi',
+                content: `
+                    <h1>Plugin Sistemi</h1>
+                    
+                    <p>Acablade'nin plugin sistemi ile işlevselliği genişletebilirsiniz.</p>
+                    
+                    <h2>Plugin Kurulumu</h2>
+                    <ol>
+                        <li>Plugin dosyasını <code>/plugins</code> klasörüne kopyalayın</li>
+                        <li>Admin panelden "Plugins" bölümüne gidin</li>
+                        <li>Plugin'i etkinleştirin</li>
+                        <li>Gerekli konfigürasyonları yapın</li>
+                    </ol>
+                    
+                    <h2>Plugin Geliştirme</h2>
+                    <p>Kendi plugin'inizi geliştirmek için:</p>
+                    
+                    <pre><code># plugin.js
+class MyPlugin {
+  constructor() {
+    this.name = 'My Plugin';
+    this.version = '1.0.0';
+  }
+
+  init() {
+    console.log('Plugin başlatıldı');
+  }
+
+  onItemCreate(item) {
+    // Item oluşturulduğunda çalışır
+  }
+
+  onItemUpdate(item) {
+    // Item güncellendiğinde çalışır
+  }
+}
+
+module.exports = MyPlugin;</code></pre>
+                    
+                    <h2>Mevcut Pluginler</h2>
+                    <ul>
+                        <li><strong>Notification Plugin:</strong> E-posta ve SMS bildirimleri</li>
+                        <li><strong>Backup Plugin:</strong> Otomatik yedekleme</li>
+                        <li><strong>Analytics Plugin:</strong> Detaylı analitik raporları</li>
+                        <li><strong>Import/Export Plugin:</strong> Veri aktarım araçları</li>
+                    </ul>
+                `
+            },
+            'troubleshooting': {
+                title: 'Sorun Giderme',
+                content: `
+                    <h1>Sorun Giderme</h1>
+                    
+                    <p>Sık karşılaşılan sorunlar ve çözümleri:</p>
+                    
+                    <h2>Bağlantı Sorunları</h2>
+                    <h3>Sunucuya bağlanamıyor</h3>
+                    <ul>
+                        <li>İnternet bağlantınızı kontrol edin</li>
+                        <li>Firewall ayarlarını gözden geçirin</li>
+                        <li>Sunucu durumunu kontrol edin</li>
+                        <li>API anahtarınızın geçerli olduğunu doğrulayın</li>
+                    </ul>
+                    
+                    <h2>Performans Sorunları</h2>
+                    <h3>Yavaş çalışma</h3>
+                    <ul>
+                        <li>Cache'i temizleyin</li>
+                        <li>Veritabanını optimize edin</li>
+                        <li>Log dosyalarını kontrol edin</li>
+                        <li>Gereksiz pluginleri devre dışı bırakın</li>
+                    </ul>
+                    
+                    <h2>Veri Sorunları</h2>
+                    <h3>Veri kaybolması</h3>
+                    <ul>
+                        <li>Son yedekten geri yükleme yapın</li>
+                        <li>Veritabanı loglarını kontrol edin</li>
+                        <li>Sistem yöneticisiyle iletişime geçin</li>
+                    </ul>
+                    
+                    <h2>Hata Kodları</h2>
+                    <ul>
+                        <li><strong>ERR_001:</strong> Kimlik doğrulama hatası</li>
+                        <li><strong>ERR_002:</strong> Yetki yetersizliği</li>
+                        <li><strong>ERR_003:</strong> Veri formatı hatası</li>
+                        <li><strong>ERR_004:</strong> Sunucu hatası</li>
+                    </ul>
+                    
+                    <h2>Destek</h2>
+                    <p>Sorunuzun çözümünü bulamazsanız:</p>
+                    <ul>
+                        <li>Sistem loglarını toplayın</li>
+                        <li>Hata detaylarını not alın</li>
+                        <li>Destek ekibiyle iletişime geçin</li>
+                    </ul>
+                `
+            }
+        };
+
+        function loadPage(pageId) {
+            const content = document.getElementById('content');
+            const page = pages[pageId];
+            
+            if (page) {
+                content.innerHTML = page.content;
+                
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                event.target.classList.add('active');
+            } else {
+                content.innerHTML = '<h1>Sayfa Bulunamadı</h1><p>İstediğiniz sayfa bulunamadı.</p>';
+            }
+        }
+
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                const text = link.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    link.style.display = 'block';
+                } else {
+                    link.style.display = searchTerm ? 'none' : 'block';
+                }
+            });
+        });
+
+        window.onload = function() {
+            loadPage('ozel-client');
+        };
+    </script>
+</body>
+</html>
