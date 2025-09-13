@@ -256,15 +256,9 @@
 
         <h2>Adımlar:</h2>
         <ol>
-            <li><b>IntelliJ IDEA</b> üzerinden MCP klasörünü açın.</li>
+            <li><b>IntelliJ IDEA & Eclipse IDE</b> üzerinden MCP klasörünü açın.</li>
             <li><code>src/minecraft/net/minecraft/item</code> paketi içerisine gidin.</li>
-            <li>Burada <code>Item</code> class’ını bulun ve üzerine <b>CTRL + Sol Tık</b> ile girin.</li>
-            <li>Class içindeki kodları <b>CTRL + A</b> ardından <b>CTRL + C</b> yaparak kopyalayın.</li>
-            <li>Aynı paket içinde <code>ItemCustom</code> adında yeni bir class oluşturun.</li>
-            <li>Oluşturduğunuz class içerisine kopyaladığınız kodları <b>CTRL + V</b> yaparak yapıştırın.</li>
-            <li>Yeni iteminizi tanımlamak için constructor içine gerekli özellikleri ekleyin (isim, ID, materyal, vs.).</li>
-            <li><code>Item.registerItems()</code> kısmına gidin ve kendi iteminizi tanımlayın.</li>
-            <li><b>Optional:</b> Eğer item’in modelini ve render’ını göstermek istiyorsanız, <code>RenderItem</code> ve <code>Items</code> class’larında da itemi ekleyin:
+            <li>Burada <code>Item</code> class’ını bulun ve üzerine <b>Sol Tık</b> ile girin.</li>
                 <ul>
                     <li><code>Items.customItem = new ItemCustom().setUnlocalizedName("customItem");</code></li>
                     <li>RenderItem üzerinden model register işlemini yapın (örn. <code>renderItem.registerItemModel(item)</code> gibi)</li>
