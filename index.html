@@ -262,20 +262,35 @@
             <li>Oluşturduğunuz class içerisine kopyaladığınız kodları <b>CTRL + V</b> yaparak yapıştırın.</li>
             <li>Yeni iteminizi tanımlamak için constructor içine gerekli özellikleri ekleyin (isim, ID, materyal, vs.).</li>
             <li><code>Item.registerItems()</code> kısmına gidin ve kendi iteminizi tanımlayın.</li>
+            <li><b>Optional:</b> Eğer item’in modelini ve render’ını göstermek istiyorsanız, <code>RenderItem</code> ve <code>Items</code> class’larında da itemi ekleyin:
+                <ul>
+                    <li><code>Items.customItem = new ItemCustom().setUnlocalizedName("customItem");</code></li>
+                    <li>RenderItem üzerinden model register işlemini yapın (örn. <code>renderItem.registerItemModel(item)</code> gibi)</li>
+                </ul>
+            </li>
         </ol>
 
         <h2>Örnek Kod:</h2>
-        <pre><code>// Yeni item
+        <pre><code>// Item class içinde eklemeniz gereken
+Item.registerItem(276, "diamond_sword", new ItemSword(ToolMaterial.EMERALD).setUnlocalizedName("swordDiamond"));
 
-registerItem(5000, "custom_item", new ItemCustom());
+// Items classı içinde 1. eklemeniz gereken
+public static final Item diamond_sword;
+// Items classı içinde 2. eklemeniz gereken
+diamond_sword = Items.getRegisteredItem("diamond_sword");
+
+// RenderItem classı içinde registerItems methodu içine eklemeniz gereken
+this.registerItem(Items.diamond_sword, "diamond_sword");
 </code></pre>
 
         <h2>Notlar:</h2>
         <ul>
-            <li><code>registerItem(id, "isim", new ItemCustom())</code> formatını kullanın.</li>
+            <li><code>registerItem(id, "isim", item)</code> formatını kullanın.</li>
             <li><b>item_id</b>: Daha önce kullanılmamış bir ID seçin.</li>
             <li><b>item_ismi</b>: Örneğin <code>custom_item</code> gibi küçük harflerle ve alt çizgi ile yazın.</li>
             <li><b>UnlocalizedName</b>: Minecraft’ın item ismini tanıyacağı kısımdır (örn: <code>customItem</code>).</li>
+            <li><b>item_ismi örneği:</b> Örn. <code>diamond_sword</code>, kendi iteminize göre değiştirebilirsiniz.</li>
+            <li>Model ve render işlemleri client tarafında yapılmalıdır, server tarafında sadece item register yeterlidir.</li>
         </ul>
     `
 },
