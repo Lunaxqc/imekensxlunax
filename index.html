@@ -205,7 +205,9 @@
             <div class="nav-section">
                 <h3>SIFIRDAN CLİENT</h3>
                 <a class="nav-link active" onclick="loadPage('payload-ekleme')">Payload Sistemi</a>
+                <a class="nav-link active" onclick="loadPage('item-ekleme')">Item Nasıl Eklenir</a>
             </div>
+
         </nav>
 
         <main class="content" id="content">
@@ -242,6 +244,39 @@
     final String json = new String(data, StandardCharsets.UTF_8);
     GUICraftriseMenu.openFromJson(json);
 }</code></pre>
+    `
+},
+'item-ekleme': {
+    title: 'Item Nasıl Eklenir',
+    content: `
+        <h1>Item Nasıl Eklenir</h1>
+        <p>MCP 1.8.9 kullanarak client’imize yeni bir item nasıl ekleriz?</p>
+
+        <h2>Adımlar:</h2>
+        <ol>
+            <li><b>IntelliJ IDEA</b> üzerinden MCP klasörünü açın.</li>
+            <li><code>src/minecraft/net/minecraft/item</code> paketi içerisine gidin.</li>
+            <li>Burada <code>Item</code> class’ını bulun ve üzerine <b>CTRL + Sol Tık</b> ile girin.</li>
+            <li>Class içindeki kodları <b>CTRL + A</b> ardından <b>CTRL + C</b> yaparak kopyalayın.</li>
+            <li>Aynı paket içinde <code>ItemCustom</code> adında yeni bir class oluşturun.</li>
+            <li>Oluşturduğunuz class içerisine kopyaladığınız kodları <b>CTRL + V</b> yaparak yapıştırın.</li>
+            <li>Yeni iteminizi tanımlamak için constructor içine gerekli özellikleri ekleyin (isim, ID, materyal, vs.).</li>
+            <li><code>Item.registerItems()</code> kısmına gidin ve kendi iteminizi tanımlayın.</li>
+        </ol>
+
+        <h2>Örnek Kod:</h2>
+        <pre><code>// Yeni item
+
+registerItem(5000, "custom_item", new ItemCustom());
+</code></pre>
+
+        <h2>Notlar:</h2>
+        <ul>
+            <li><code>registerItem(id, "isim", new ItemCustom())</code> formatını kullanın.</li>
+            <li><b>item_id</b>: Daha önce kullanılmamış bir ID seçin.</li>
+            <li><b>item_ismi</b>: Örneğin <code>custom_item</code> gibi küçük harflerle ve alt çizgi ile yazın.</li>
+            <li><b>UnlocalizedName</b>: Minecraft’ın item ismini tanıyacağı kısımdır (örn: <code>customItem</code>).</li>
+        </ul>
     `
 },
             'ayarlar': { /*... aynı */ },
